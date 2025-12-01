@@ -1,4 +1,5 @@
 from pico2d import *
+from game_world import *
 import common
 
 class Ball:
@@ -9,6 +10,8 @@ class Ball:
 
         self.x, self.y = x, y
         self.w, self.h = Ball.image.w, Ball.image.h
+
+        add_collision_pair('boy:ball', None, self)
 
     def update(self):
         pass
@@ -21,7 +24,7 @@ class Ball:
         sy = self.y - common.court.window_bottom
         self.image.clip_draw(0, 0, self.w, self.h, sx, sy)
         min_x, min_y, max_x, max_y = self.debug_bb(sx, sy)
-        draw_rectangle(min_x, min_y, max_x, max_y, 255, 0, 0)
+        draw_rectangle(min_x, min_y, max_x, max_y)
 
     def get_bb(self):
         return self.x - self.w // 2, self.y - self.h // 2, self.x + self.w // 2, self.y + self.h // 2
@@ -30,4 +33,5 @@ class Ball:
         return sx - self.w // 2, sy - self.h // 2, sx + self.w // 2, sy + self.h // 2
 
     def handle_collision(self, group, other):
-        pass
+        if group == 'boy:ball':
+            print('ball collided')

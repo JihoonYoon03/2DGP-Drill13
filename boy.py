@@ -4,6 +4,7 @@ from sdl2 import SDL_KEYDOWN, SDLK_SPACE, SDLK_RIGHT, SDL_KEYUP, SDLK_LEFT, SDLK
 import common
 import game_world
 import game_framework
+from game_world import add_collision_pair
 
 from state_machine import StateMachine
 
@@ -104,6 +105,9 @@ class Boy:
         self.xdir, self.ydir = 0, 0
         self.image = load_image('animation_sheet.png')
 
+        self.w = 40
+        self.h = 100
+
         self.IDLE = Idle(self)
         self.RUN = Run(self)
         self.state_machine = StateMachine(
@@ -113,6 +117,8 @@ class Boy:
                 self.RUN: {event_stop: self.IDLE}
             }
         )
+
+        add_collision_pair('boy:ball', self, None)
 
 
     def update(self):
@@ -147,10 +153,17 @@ class Boy:
 
     def draw(self):
         self.state_machine.draw()
+        sx = self.x - common.court.window_left
+        sy = self.y - common.court.window_bottom
+        x1, y1, x2, y2 = self.debug_bb(sx, sy)
+        draw_rectangle(x1, y1, x2, y2)
 
     # fill here
     def get_bb(self):
         return self.x - 20, self.y - 50, self.x + 20, self.y + 50
+
+    def debug_bb(self, sx, sy):
+        return sx - self.w // 2, sy - self.h // 2, sx + self.w // 2, sy + self.h // 2
 
     def handle_collision(self, group, other):
         pass
