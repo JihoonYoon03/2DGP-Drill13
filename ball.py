@@ -20,9 +20,14 @@ class Ball:
         sx = self.x - common.court.window_left
         sy = self.y - common.court.window_bottom
         self.image.clip_draw(0, 0, self.w, self.h, sx, sy)
+        min_x, min_y, max_x, max_y = self.debug_bb(sx, sy)
+        draw_rectangle(min_x, min_y, max_x, max_y, 255, 0, 0)
 
     def get_bb(self):
         return self.x - self.w // 2, self.y - self.h // 2, self.x + self.w // 2, self.y + self.h // 2
+
+    def debug_bb(self, sx, sy):
+        return sx - self.w // 2, sy - self.h // 2, sx + self.w // 2, sy + self.h // 2
 
     def handle_collision(self, group, other):
         pass
