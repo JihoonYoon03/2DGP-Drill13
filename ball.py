@@ -1,4 +1,5 @@
 from pico2d import *
+import common
 
 class Ball:
     image = None
@@ -16,7 +17,9 @@ class Ball:
         pass
 
     def draw(self):
-        self.image.clip_draw(0, 0, self.w, self.h, self.x, self.y)
+        sx = self.x - common.court.window_left
+        sy = self.y - common.court.window_bottom
+        self.image.clip_draw(0, 0, self.w, self.h, sx, sy)
 
     def get_bb(self):
         return self.x - self.w // 2, self.y - self.h // 2, self.x + self.w // 2, self.y + self.h // 2
