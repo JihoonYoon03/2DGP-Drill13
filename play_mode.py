@@ -33,7 +33,6 @@ def init():
     balls = [Ball(random.randint(50, common.court.w - 50), random.randint(50, common.court.h - 50)) for _ in range(0, 100)]
     game_world.add_objects(balls, 1)
 
-
 def finish():
     game_world.clear()
     pass
