@@ -108,6 +108,8 @@ class Boy:
         self.w = 40
         self.h = 100
 
+        self.ball_count = 0
+
         self.IDLE = Idle(self)
         self.RUN = Run(self)
         self.state_machine = StateMachine(
@@ -166,4 +168,6 @@ class Boy:
         return sx - self.w // 2, sy - self.h // 2, sx + self.w // 2, sy + self.h // 2
 
     def handle_collision(self, group, other):
-        pass
+        if group == 'boy:ball':
+            self.ball_count += 1
+            print(self.ball_count)

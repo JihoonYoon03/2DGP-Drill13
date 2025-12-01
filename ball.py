@@ -1,4 +1,6 @@
 from pico2d import *
+
+import game_world
 from game_world import *
 import common
 
@@ -34,4 +36,4 @@ class Ball:
 
     def handle_collision(self, group, other):
         if group == 'boy:ball':
-            print('ball collided')
+            game_world.remove_object(self)
